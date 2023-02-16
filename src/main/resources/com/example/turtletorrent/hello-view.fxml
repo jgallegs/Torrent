@@ -4,9 +4,9 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="477.0" prefWidth="643.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.turtletorrent.HelloController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="477.0" prefWidth="643.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.turtletorrent.HelloController">
    <children>
-      <Button id="btCargarTorrent" fx:id="btnConnect" layoutX="231.0" layoutY="353.0" text="Conectar" />
+      <Button id="btCargarTorrent" fx:id="btnConnect" layoutX="231.0" layoutY="353.0" onMouseClicked="#onConnectClick" text="Conectar" />
       <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="643.0">
         <menus>
           <Menu id="btAddTorrent" mnemonicParsing="false" onAction="#onAddTorrentClick" text="Añadir Torrent" />
@@ -14,12 +14,7 @@
         </menus>
       </MenuBar>
       <ImageView id="imgSelected" fitHeight="150.0" fitWidth="200.0" layoutX="53.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true" />
-      <TableView id="tablaElementos" layoutX="-2.0" layoutY="26.0" prefHeight="309.0" prefWidth="643.0">
-        <columns>
-          <TableColumn prefWidth="325.0" text="C1" />
-          <TableColumn prefWidth="317.0" text="C2" />
-        </columns>
-      </TableView>
+      <TableView id="tablaElementos" fx:id="tblArchivos" layoutX="-2.0" layoutY="26.0" prefHeight="309.0" prefWidth="643.0" />
       <TextField fx:id="txtIp" layoutX="59.0" layoutY="353.0" />
       <TextField fx:id="txtPort" layoutX="59.0" layoutY="403.0" />
       <Label layoutX="14.0" layoutY="357.0" text="IP:" />
