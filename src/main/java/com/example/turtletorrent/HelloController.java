@@ -12,6 +12,8 @@ import javafx.stage.FileChooser;
 
 import java.io.*;
 import java.net.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 
 public class HelloController {
@@ -138,10 +140,33 @@ public class HelloController {
                     DatagramPacket paquete = new DatagramPacket(mensaje, mensaje.length, InetAddress.getByName(txtIp.getText()), Integer.parseInt(txtPort.getText()));
                     socket.send(paquete);
                     System.out.println("Se envio el nombre del archivo");
+                    descargarArchivo(archivo.getNombre());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         }
     }
+
+    private void descargarArchivo(String nombre) {
+        try {
+            in = new DataInputStream(socket.getInputStream());
+            out = new DataOutputStream(socket.getOutputStream());
+            int numberOfCachos = (Integer.parseInt(new BufferedReader(new InputStreamReader(in)).readLine()));
+            System.out.println("Numero de cachos: " + numberOfCachos);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            byte[][] buffer = new byte[numberOfCachos][1024];
+            for (int i = 0; i < numberOfCachos; i++) {
+                baos.write(buffer[i]);
+            }
+            System.out.println("Se recibio el archivo");
+            baos.flush();
+            baos.close();
+            Files.write(Path.of("src/descargas/" + nombre), baos.toByteArray());
+            System.out.println("Se guardo el archivo");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
+
