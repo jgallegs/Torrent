@@ -2,8 +2,10 @@ package com.example.turtletorrent;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
@@ -15,9 +17,12 @@ import java.util.Arrays;
 public class HelloController {
     public TextField txtIp;
     public TextField txtPort;
-    public TableView<ObservableList<String>> tblArchivos;
-    public TableColumn clmNombre;
-    public TableColumn clmTamano;
+    public TableView<Archivo> tblArchivos;
+    public TableColumn<Object, Object> clmNombre;
+    public TableColumn<Object, Object> clmTamano;
+    public Button btnDescargarTorrent;
+    public Button btnConnect;
+    private ObservableList<Archivo> listaArchivos;
     @FXML
     private Label welcomeText;
 
@@ -34,6 +39,10 @@ public class HelloController {
 
     @FXML
     private void initialize() {
+        listaArchivos = FXCollections.observableArrayList();
+        clmNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        clmTamano.setCellValueFactory(new PropertyValueFactory<>("tamano"));
+        tblArchivos.setItems(listaArchivos);
     }
 
     private Socket socket = null;
@@ -57,6 +66,7 @@ public class HelloController {
         File file = fileChooser.showOpenDialog(HelloApplication.g_stage);
         welcomeText.setText(file.getName());
     }
+
     @FXML
     protected void onCloseButton() {
         System.exit(0);
@@ -64,14 +74,23 @@ public class HelloController {
 
     public void onConnectClick(MouseEvent mouseEvent) throws IOException {
         try {
+            tblArchivos.getItems().clear();
+            txtIp.setEditable(false);
+            txtPort.setEditable(false);
+            btnConnect.setDisable(true);
             socket = new Socket(txtIp.getText(), Integer.parseInt(txtPort.getText()));
             if (socket.isConnected()) {
                 System.out.println("Connected");
+                // sends output to the socket
+                out = new DataOutputStream(socket.getOutputStream());
+                //takes input from socket
+                in = new DataInputStream(socket.getInputStream());
+            } else {
+                System.out.println("Not Connected");
+                txtIp.setEditable(true);
+                txtPort.setEditable(true);
+                btnConnect.setDisable(false);
             }
-            // sends output to the socket
-            out = new DataOutputStream(socket.getOutputStream());
-            //takes input from socket
-            in = new DataInputStream(socket.getInputStream());
         } catch (UnknownHostException u) {
             System.out.println(u);
         } catch (IOException i) {
@@ -97,15 +116,32 @@ public class HelloController {
         for (int i = 0; i < parts.length; i++) {
             datosServer[i] = parts[i].split(":");
         }
-        // put the String[][] to the table
-        ObservableList<ObservableList<String>> data = tblArchivos.getItems();
+        // put the String[][] to the observable list
         for (String[] strings : datosServer) {
-            ObservableList<String> row = FXCollections.observableArrayList();
-            row.addAll(Arrays.asList(strings));
-            data.add(row);
+            listaArchivos.add(new Archivo(strings[0], strings[1]));
         }
-        tblArchivos.setItems(data);
 
 
+    }
+
+    public void OnActionBtnDescargarTorrent(ActionEvent actionEvent) {
+        if (tblArchivos.getSelectionModel().getSelectedItem() != null) {
+            Archivo archivo = tblArchivos.getSelectionModel().getSelectedItem();
+            System.out.println("Se va a descargar el archivo: " + archivo.getNombre());
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Se va a descargar el archivo: " + archivo.getNombre(), ButtonType.OK, ButtonType.CANCEL);
+            alert.showAndWait();
+            if (alert.getResult() == ButtonType.OK) {
+                // send the file name to the server via datagram
+                try {
+                    DatagramSocket socket = new DatagramSocket();
+                    byte[] mensaje = archivo.getNombre().getBytes();
+                    DatagramPacket paquete = new DatagramPacket(mensaje, mensaje.length, InetAddress.getByName(txtIp.getText()), Integer.parseInt(txtPort.getText()));
+                    socket.send(paquete);
+                    System.out.println("Se envio el nombre del archivo");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }
