@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="456.0" prefWidth="465.0" xmlns="http://javafx.com/javafx/18.0.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.turtletorrent.TresEnRaya">
+   <children>
+      <Label fx:id="winnerMsg" layoutX="110.0" layoutY="158.0" textFill="WHITE" AnchorPane.bottomAnchor="159.0" AnchorPane.leftAnchor="110.0" AnchorPane.rightAnchor="109.0" AnchorPane.topAnchor="158.0">
+         <font>
+            <Font size="32.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="320.0" fitWidth="354.0" layoutX="56.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="73.93499755859375" AnchorPane.leftAnchor="56.0" AnchorPane.rightAnchor="55.0" AnchorPane.topAnchor="73.0">
+         <image>
+            <Image url="@../../../drawable/tresenraya_board.png" />
+         </image>
+      </ImageView>
+      <Pane fx:id="panel" prefHeight="456.0" prefWidth="465.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <ImageView fx:id="leftTop" fitHeight="97.0" fitWidth="108.0" layoutX="56.0" layoutY="73.0" onMouseClicked="#drawBoard" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="midTop" fitHeight="89.0" fitWidth="115.0" layoutX="174.0" layoutY="77.0" onMouseClicked="#drawBoard" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="rightTop" fitHeight="89.0" fitWidth="100.0" layoutX="303.0" layoutY="77.0" onMouseClicked="#drawBoard" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="leftMid" fitHeight="97.0" fitWidth="100.0" layoutX="60.0" layoutY="180.0" onMouseClicked="#drawBoard" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="rightMid" fitHeight="97.0" fitWidth="100.0" layoutX="303.0" layoutY="176.0" onMouseClicked="#drawBoard" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="midMid" fitHeight="89.0" fitWidth="108.0" layoutX="177.0" layoutY="180.0" onMouseClicked="#drawBoard" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="midBot" fitHeight="89.0" fitWidth="108.0" layoutX="177.0" layoutY="286.0" onMouseClicked="#drawBoard" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="leftBot" fitHeight="97.0" fitWidth="100.0" layoutX="60.0" layoutY="285.0" onMouseClicked="#drawBoard" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="rightBot" fitHeight="89.0" fitWidth="100.0" layoutX="303.0" layoutY="289.0" onMouseClicked="#drawBoard" pickOnBounds="true" preserveRatio="true" />
+   </children>
+</AnchorPane>

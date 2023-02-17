@@ -9,7 +9,7 @@
       <Button id="btCargarTorrent" fx:id="btnConnect" layoutX="231.0" layoutY="353.0" text="Conectar" />
       <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="643.0">
         <menus>
-          <Menu id="btAddTorrent" mnemonicParsing="false" onAction="#onAddTorrentClick" text="Añadir Torrent" />
+          <Menu id="btAddTorrent" mnemonicParsing="false" text="Añadir Torrent" />
           <Menu mnemonicParsing="false" onAction="#onCloseButton" text="Salir" />
         </menus>
       </MenuBar>
